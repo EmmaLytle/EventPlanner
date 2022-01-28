@@ -1,0 +1,593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EventPlan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventTypeID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventPlanItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventPlanID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="ZipCode" Type="int" />
+          <Property Name="StartDateTime" Type="datetime2" Precision="7" />
+          <Property Name="EndDateTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="IsEnabled" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Invite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventPlanID" Type="int" Nullable="false" />
+          <Property Name="RelationshipTypeID" Type="int" Nullable="false" />
+          <Property Name="Household" Type="nvarchar" MaxLength="50" />
+          <Property Name="HeadCountRSVP" Type="int" />
+          <Property Name="HeadCountEstimate" Type="int" Nullable="false" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="ZipCode" Type="int" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RelationshipType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="IsEnabled" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EventPlanner.dbo.EventPlanSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EventPlanSummary">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="EventTypeID" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="EventTypeDisplayName" />
+            <PropertyRef Name="TotalRSVP" />
+            <PropertyRef Name="TotalRSVPEstimate" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="EventTypeID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="EventTypeDisplayName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalRSVP" Type="int" Nullable="false" />
+          <Property Name="TotalRSVPEstimate" Type="int" Nullable="false" />
+          <Property Name="EventList" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EventPlanner.dbo.InviteSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="InviteSummary">
+          <Key>
+            <PropertyRef Name="EventPlanID" />
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="RelationshipTypeID" />
+            <PropertyRef Name="HeadCountEstimate" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="RelationshipDisplayName" />
+          </Key>
+          <Property Name="EventPlanID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="RelationshipTypeID" Type="int" Nullable="false" />
+          <Property Name="Household" Type="nvarchar" MaxLength="50" />
+          <Property Name="HeadCountRSVP" Type="int" />
+          <Property Name="HeadCountEstimate" Type="int" Nullable="false" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="ZipCode" Type="int" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="RelationshipDisplayName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EventPlanItemList" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <Association Name="FK_EventPlan_EventType">
+          <End Role="EventType" Type="Self.EventType" Multiplicity="1" />
+          <End Role="EventPlan" Type="Self.EventPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventPlan">
+              <PropertyRef Name="EventTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventPlanItem_EventPlan">
+          <End Role="EventPlan" Type="Self.EventPlan" Multiplicity="1" />
+          <End Role="EventPlanItem" Type="Self.EventPlanItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventPlan">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventPlanItem">
+              <PropertyRef Name="EventPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invite_EventPlan">
+          <End Role="EventPlan" Type="Self.EventPlan" Multiplicity="1" />
+          <End Role="Invite" Type="Self.Invite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventPlan">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Invite">
+              <PropertyRef Name="EventPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invite_RelationshipType">
+          <End Role="RelationshipType" Type="Self.RelationshipType" Multiplicity="1" />
+          <End Role="Invite" Type="Self.Invite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelationshipType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Invite">
+              <PropertyRef Name="RelationshipTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="EventPlan" EntityType="Self.EventPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventPlanItem" EntityType="Self.EventPlanItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventType" EntityType="Self.EventType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invite" EntityType="Self.Invite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RelationshipType" EntityType="Self.RelationshipType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventPlanSummary" EntityType="Self.EventPlanSummary" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EventPlanSummary].[ID] AS [ID], 
+    [EventPlanSummary].[EventTypeID] AS [EventTypeID], 
+    [EventPlanSummary].[Title] AS [Title], 
+    [EventPlanSummary].[Description] AS [Description], 
+    [EventPlanSummary].[ModifiedDate] AS [ModifiedDate], 
+    [EventPlanSummary].[EventTypeDisplayName] AS [EventTypeDisplayName], 
+    [EventPlanSummary].[TotalRSVP] AS [TotalRSVP], 
+    [EventPlanSummary].[TotalRSVPEstimate] AS [TotalRSVPEstimate], 
+    [EventPlanSummary].[EventList] AS [EventList]
+    FROM [dbo].[EventPlanSummary] AS [EventPlanSummary]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="InviteSummary" EntityType="Self.InviteSummary" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [InviteSummary].[EventPlanID] AS [EventPlanID], 
+    [InviteSummary].[ID] AS [ID], 
+    [InviteSummary].[RelationshipTypeID] AS [RelationshipTypeID], 
+    [InviteSummary].[Household] AS [Household], 
+    [InviteSummary].[HeadCountRSVP] AS [HeadCountRSVP], 
+    [InviteSummary].[HeadCountEstimate] AS [HeadCountEstimate], 
+    [InviteSummary].[AddressLine1] AS [AddressLine1], 
+    [InviteSummary].[AddressLine2] AS [AddressLine2], 
+    [InviteSummary].[City] AS [City], 
+    [InviteSummary].[State] AS [State], 
+    [InviteSummary].[ZipCode] AS [ZipCode], 
+    [InviteSummary].[Phone] AS [Phone], 
+    [InviteSummary].[Email] AS [Email], 
+    [InviteSummary].[CreatedDate] AS [CreatedDate], 
+    [InviteSummary].[ModifiedDate] AS [ModifiedDate], 
+    [InviteSummary].[RelationshipDisplayName] AS [RelationshipDisplayName], 
+    [InviteSummary].[EventPlanItemList] AS [EventPlanItemList]
+    FROM [dbo].[InviteSummary] AS [InviteSummary]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_EventPlan_EventType" Association="Self.FK_EventPlan_EventType">
+            <End Role="EventType" EntitySet="EventType" />
+            <End Role="EventPlan" EntitySet="EventPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventPlanItem_EventPlan" Association="Self.FK_EventPlanItem_EventPlan">
+            <End Role="EventPlan" EntitySet="EventPlan" />
+            <End Role="EventPlanItem" EntitySet="EventPlanItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invite_EventPlan" Association="Self.FK_Invite_EventPlan">
+            <End Role="EventPlan" EntitySet="EventPlan" />
+            <End Role="Invite" EntitySet="Invite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invite_RelationshipType" Association="Self.FK_Invite_RelationshipType">
+            <End Role="RelationshipType" EntitySet="RelationshipType" />
+            <End Role="Invite" EntitySet="Invite" />
+          </AssociationSet>
+          </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EventPlan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="EventType" Relationship="Model.FK_EventPlan_EventType" FromRole="EventPlan" ToRole="EventType" />
+          <NavigationProperty Name="EventPlanItems" Relationship="Model.FK_EventPlanItem_EventPlan" FromRole="EventPlan" ToRole="EventPlanItem" />
+          <NavigationProperty Name="Invites" Relationship="Model.FK_Invite_EventPlan" FromRole="EventPlan" ToRole="Invite" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EventPlans" EntityType="Self.EventPlan" />
+          <EntitySet Name="EventPlanSummaries" EntityType="Model.EventPlanSummary" />
+          <EntitySet Name="EventPlanItems" EntityType="Model.EventPlanItem" />
+          <EntitySet Name="EventTypes" EntityType="Model.EventType" />
+          <EntitySet Name="Invites" EntityType="Model.Invite" />
+          <EntitySet Name="RelationshipTypes" EntityType="Model.RelationshipType" />
+          <EntitySet Name="InviteSummaries" EntityType="Model.InviteSummary" />
+          <AssociationSet Name="FK_EventPlan_EventType" Association="Model.FK_EventPlan_EventType">
+            <End Role="EventType" EntitySet="EventTypes" />
+            <End Role="EventPlan" EntitySet="EventPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventPlanItem_EventPlan" Association="Model.FK_EventPlanItem_EventPlan">
+            <End Role="EventPlan" EntitySet="EventPlans" />
+            <End Role="EventPlanItem" EntitySet="EventPlanItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invite_EventPlan" Association="Model.FK_Invite_EventPlan">
+            <End Role="EventPlan" EntitySet="EventPlans" />
+            <End Role="Invite" EntitySet="Invites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invite_RelationshipType" Association="Model.FK_Invite_RelationshipType">
+            <End Role="RelationshipType" EntitySet="RelationshipTypes" />
+            <End Role="Invite" EntitySet="Invites" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="EventPlanSummary">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="EventTypeID" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="EventTypeDisplayName" />
+            <PropertyRef Name="TotalRSVP" />
+            <PropertyRef Name="TotalRSVPEstimate" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="EventTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EventTypeDisplayName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalRSVP" Type="Int32" Nullable="false" />
+          <Property Name="TotalRSVPEstimate" Type="Int32" Nullable="false" />
+          <Property Name="EventList" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EventPlanItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventPlanID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="StartDateTime" Type="DateTime" Precision="7" />
+          <Property Name="EndDateTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="EventPlan" Relationship="Model.FK_EventPlanItem_EventPlan" FromRole="EventPlanItem" ToRole="EventPlan" />
+        </EntityType>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="EventPlans" Relationship="Model.FK_EventPlan_EventType" FromRole="EventType" ToRole="EventPlan" />
+        </EntityType>
+        <EntityType Name="Invite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventPlanID" Type="Int32" Nullable="false" />
+          <Property Name="RelationshipTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Household" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HeadCountRSVP" Type="Int32" />
+          <Property Name="HeadCountEstimate" Type="Int32" Nullable="false" />
+          <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="EventPlan" Relationship="Model.FK_Invite_EventPlan" FromRole="Invite" ToRole="EventPlan" />
+          <NavigationProperty Name="RelationshipType" Relationship="Model.FK_Invite_RelationshipType" FromRole="Invite" ToRole="RelationshipType" />
+        </EntityType>
+        <EntityType Name="RelationshipType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Invites" Relationship="Model.FK_Invite_RelationshipType" FromRole="RelationshipType" ToRole="Invite" />
+        </EntityType>
+        <EntityType Name="InviteSummary">
+          <Key>
+            <PropertyRef Name="EventPlanID" />
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="RelationshipTypeID" />
+            <PropertyRef Name="HeadCountEstimate" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="RelationshipDisplayName" />
+          </Key>
+          <Property Name="EventPlanID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="RelationshipTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Household" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HeadCountRSVP" Type="Int32" />
+          <Property Name="HeadCountEstimate" Type="Int32" Nullable="false" />
+          <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="RelationshipDisplayName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EventPlanItemList" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_EventPlan_EventType">
+          <End Type="Model.EventType" Role="EventType" Multiplicity="1" />
+          <End Type="Model.EventPlan" Role="EventPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventPlan">
+              <PropertyRef Name="EventTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventPlanItem_EventPlan">
+          <End Type="Model.EventPlan" Role="EventPlan" Multiplicity="1" />
+          <End Type="Model.EventPlanItem" Role="EventPlanItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventPlan">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventPlanItem">
+              <PropertyRef Name="EventPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invite_EventPlan">
+          <End Type="Model.EventPlan" Role="EventPlan" Multiplicity="1" />
+          <End Type="Model.Invite" Role="Invite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventPlan">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Invite">
+              <PropertyRef Name="EventPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invite_RelationshipType">
+          <End Type="Model.RelationshipType" Role="RelationshipType" Multiplicity="1" />
+          <End Type="Model.Invite" Role="Invite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelationshipType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Invite">
+              <PropertyRef Name="RelationshipTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="EventPlans">
+            <EntityTypeMapping TypeName="Model.EventPlan">
+              <MappingFragment StoreEntitySet="EventPlan">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventPlanSummaries">
+            <EntityTypeMapping TypeName="Model.EventPlanSummary">
+              <MappingFragment StoreEntitySet="EventPlanSummary">
+                <ScalarProperty Name="EventList" ColumnName="EventList" />
+                <ScalarProperty Name="TotalRSVPEstimate" ColumnName="TotalRSVPEstimate" />
+                <ScalarProperty Name="TotalRSVP" ColumnName="TotalRSVP" />
+                <ScalarProperty Name="EventTypeDisplayName" ColumnName="EventTypeDisplayName" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventPlanItems">
+            <EntityTypeMapping TypeName="Model.EventPlanItem">
+              <MappingFragment StoreEntitySet="EventPlanItem">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="EndDateTime" ColumnName="EndDateTime" />
+                <ScalarProperty Name="StartDateTime" ColumnName="StartDateTime" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EventPlanID" ColumnName="EventPlanID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventTypes">
+            <EntityTypeMapping TypeName="Model.EventType">
+              <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invites">
+            <EntityTypeMapping TypeName="Model.Invite">
+              <MappingFragment StoreEntitySet="Invite">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="HeadCountEstimate" ColumnName="HeadCountEstimate" />
+                <ScalarProperty Name="HeadCountRSVP" ColumnName="HeadCountRSVP" />
+                <ScalarProperty Name="Household" ColumnName="Household" />
+                <ScalarProperty Name="RelationshipTypeID" ColumnName="RelationshipTypeID" />
+                <ScalarProperty Name="EventPlanID" ColumnName="EventPlanID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RelationshipTypes">
+            <EntityTypeMapping TypeName="Model.RelationshipType">
+              <MappingFragment StoreEntitySet="RelationshipType">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InviteSummaries">
+            <EntityTypeMapping TypeName="Model.InviteSummary">
+              <MappingFragment StoreEntitySet="InviteSummary">
+                <ScalarProperty Name="EventPlanItemList" ColumnName="EventPlanItemList" />
+                <ScalarProperty Name="RelationshipDisplayName" ColumnName="RelationshipDisplayName" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="HeadCountEstimate" ColumnName="HeadCountEstimate" />
+                <ScalarProperty Name="HeadCountRSVP" ColumnName="HeadCountRSVP" />
+                <ScalarProperty Name="Household" ColumnName="Household" />
+                <ScalarProperty Name="RelationshipTypeID" ColumnName="RelationshipTypeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EventPlanID" ColumnName="EventPlanID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

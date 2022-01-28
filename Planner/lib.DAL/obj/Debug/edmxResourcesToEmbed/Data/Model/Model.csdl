@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="EventPlan">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EventTypeID" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="EventType" Relationship="Model.FK_EventPlan_EventType" FromRole="EventPlan" ToRole="EventType" />
+    <NavigationProperty Name="EventPlanItems" Relationship="Model.FK_EventPlanItem_EventPlan" FromRole="EventPlan" ToRole="EventPlanItem" />
+    <NavigationProperty Name="Invites" Relationship="Model.FK_Invite_EventPlan" FromRole="EventPlan" ToRole="Invite" />
+  </EntityType>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="EventPlans" EntityType="Self.EventPlan" />
+    <EntitySet Name="EventPlanSummaries" EntityType="Model.EventPlanSummary" />
+    <EntitySet Name="EventPlanItems" EntityType="Model.EventPlanItem" />
+    <EntitySet Name="EventTypes" EntityType="Model.EventType" />
+    <EntitySet Name="Invites" EntityType="Model.Invite" />
+    <EntitySet Name="RelationshipTypes" EntityType="Model.RelationshipType" />
+    <EntitySet Name="InviteSummaries" EntityType="Model.InviteSummary" />
+    <AssociationSet Name="FK_EventPlan_EventType" Association="Model.FK_EventPlan_EventType">
+      <End Role="EventType" EntitySet="EventTypes" />
+      <End Role="EventPlan" EntitySet="EventPlans" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventPlanItem_EventPlan" Association="Model.FK_EventPlanItem_EventPlan">
+      <End Role="EventPlan" EntitySet="EventPlans" />
+      <End Role="EventPlanItem" EntitySet="EventPlanItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invite_EventPlan" Association="Model.FK_Invite_EventPlan">
+      <End Role="EventPlan" EntitySet="EventPlans" />
+      <End Role="Invite" EntitySet="Invites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invite_RelationshipType" Association="Model.FK_Invite_RelationshipType">
+      <End Role="RelationshipType" EntitySet="RelationshipTypes" />
+      <End Role="Invite" EntitySet="Invites" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="EventPlanSummary">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="EventTypeID" />
+      <PropertyRef Name="ModifiedDate" />
+      <PropertyRef Name="EventTypeDisplayName" />
+      <PropertyRef Name="TotalRSVP" />
+      <PropertyRef Name="TotalRSVPEstimate" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="EventTypeID" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="EventTypeDisplayName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TotalRSVP" Type="Int32" Nullable="false" />
+    <Property Name="TotalRSVPEstimate" Type="Int32" Nullable="false" />
+    <Property Name="EventList" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="EventPlanItem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EventPlanID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="Int32" />
+    <Property Name="StartDateTime" Type="DateTime" Precision="7" />
+    <Property Name="EndDateTime" Type="DateTime" Precision="7" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="EventPlan" Relationship="Model.FK_EventPlanItem_EventPlan" FromRole="EventPlanItem" ToRole="EventPlan" />
+  </EntityType>
+  <EntityType Name="EventType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="EventPlans" Relationship="Model.FK_EventPlan_EventType" FromRole="EventType" ToRole="EventPlan" />
+  </EntityType>
+  <EntityType Name="Invite">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EventPlanID" Type="Int32" Nullable="false" />
+    <Property Name="RelationshipTypeID" Type="Int32" Nullable="false" />
+    <Property Name="Household" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HeadCountRSVP" Type="Int32" />
+    <Property Name="HeadCountEstimate" Type="Int32" Nullable="false" />
+    <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="Int32" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="EventPlan" Relationship="Model.FK_Invite_EventPlan" FromRole="Invite" ToRole="EventPlan" />
+    <NavigationProperty Name="RelationshipType" Relationship="Model.FK_Invite_RelationshipType" FromRole="Invite" ToRole="RelationshipType" />
+  </EntityType>
+  <EntityType Name="RelationshipType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="Invites" Relationship="Model.FK_Invite_RelationshipType" FromRole="RelationshipType" ToRole="Invite" />
+  </EntityType>
+  <EntityType Name="InviteSummary">
+    <Key>
+      <PropertyRef Name="EventPlanID" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="RelationshipTypeID" />
+      <PropertyRef Name="HeadCountEstimate" />
+      <PropertyRef Name="CreatedDate" />
+      <PropertyRef Name="ModifiedDate" />
+      <PropertyRef Name="RelationshipDisplayName" />
+    </Key>
+    <Property Name="EventPlanID" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="RelationshipTypeID" Type="Int32" Nullable="false" />
+    <Property Name="Household" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HeadCountRSVP" Type="Int32" />
+    <Property Name="HeadCountEstimate" Type="Int32" Nullable="false" />
+    <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="Int32" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="RelationshipDisplayName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EventPlanItemList" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_EventPlan_EventType">
+    <End Type="Model.EventType" Role="EventType" Multiplicity="1" />
+    <End Type="Model.EventPlan" Role="EventPlan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="EventPlan">
+        <PropertyRef Name="EventTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventPlanItem_EventPlan">
+    <End Type="Model.EventPlan" Role="EventPlan" Multiplicity="1" />
+    <End Type="Model.EventPlanItem" Role="EventPlanItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventPlan">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="EventPlanItem">
+        <PropertyRef Name="EventPlanID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invite_EventPlan">
+    <End Type="Model.EventPlan" Role="EventPlan" Multiplicity="1" />
+    <End Type="Model.Invite" Role="Invite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventPlan">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Invite">
+        <PropertyRef Name="EventPlanID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invite_RelationshipType">
+    <End Type="Model.RelationshipType" Role="RelationshipType" Multiplicity="1" />
+    <End Type="Model.Invite" Role="Invite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RelationshipType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Invite">
+        <PropertyRef Name="RelationshipTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

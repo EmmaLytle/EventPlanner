@@ -1,0 +1,61 @@
+﻿@page
+@model app.razor.WebApp.Pages.EventPlan.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-4">Upcoming Events</h1>
+</div>
+
+<p>
+    <a class="btn btn-primary btn-sm" asp-page="Create">+ New Event</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+              Event
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventPlanSummary[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventPlanSummary[0].Description)
+            </th>
+            <th>
+                Event List
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.EventPlanSummary)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventTypeDisplayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventList)
+            </td>
+                        
+
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
