@@ -51,7 +51,7 @@ namespace app.razor.WebApp.Pages.EventPlan
             {
                 return NotFound();
             }
-            _eventPlanService.Delete(id.Value);
+            _eventPlanService.DeleteEventPlan(id.Value);
            
 
             return RedirectToPage("./Index");

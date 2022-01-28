@@ -52,7 +52,7 @@ namespace app.razor.WebApp.Pages.EventPlan
                 return Page();
             }
 
-            _eventPlanService.Update(CurrentEventPlan);
+            _eventPlanService.UpdateEventPlan(CurrentEventPlan);
             return RedirectToPage("./Index");
         }
 

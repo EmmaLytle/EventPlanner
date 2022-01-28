@@ -18,6 +18,7 @@ namespace lib.DAL.Data.Services
 
         }
 
+        #region EventPlan
         public EventPlan GetEventPlan(int id)
         {
             //_ent is hooked up to DB 
@@ -26,14 +27,14 @@ namespace lib.DAL.Data.Services
 
             return item;
         }
-
+               
         public IQueryable<EventPlanSummary> GetEventPlanSummary()
         {
             var items = _ent.EventPlanSummaries;
             return items;
         }
 
-        public void Update(EventPlan eventPlan)
+        public void UpdateEventPlan(EventPlan eventPlan)
         {
 
             var item = _ent.EventPlans.FirstOrDefault(p => p.ID == eventPlan.ID);
@@ -46,9 +47,9 @@ namespace lib.DAL.Data.Services
 
         }
 
-        public int Insert(EventPlan eventPlan)
+        public int InsertEventPlan(EventPlan eventPlan)
         {
-            
+
             EventPlan ep = new EventPlan();
             ep.Title = eventPlan.Title;
             ep.Description = eventPlan.Description;
@@ -57,30 +58,64 @@ namespace lib.DAL.Data.Services
             eventPlan.ModifiedDate = DateTime.UtcNow;
             eventPlan.CreatedDate = DateTime.UtcNow;
             _ent.EventPlans.Add(eventPlan);
-                       
+
             _ent.SaveChanges();
 
             return eventPlan.ID;
         }
 
-        public void Delete(int id)
+        public void DeleteEventPlan(int id)
         {
+            //Calling the Stored procedure from DB Stored procedure is wrapped in transaction.
+            //You could also use a transaction in entity framework
+            //using (var dbContextTransaction = _ent.Database.BeginTransaction())
+            //{
+            //    try
+            //    {
+            //       //Do work here
 
-            var item = _ent.EventPlans.FirstOrDefault(p => p.ID == id);
+            //        dbContextTransaction.Commit();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        dbContextTransaction.Rollback();
+            //        throw;
+            //    }
+            //}
 
-            _ent.EventPlans.Remove(item);
-            
-            
-            _ent.SaveChanges();
 
-           
+            _ent.EventPlan_Delete(id);
+
         }
-
 
         public List<EventType> GetEventPlanTypes()
         {
             var items = _ent.EventTypes.Where(p => p.IsEnabled == true).OrderBy(p => p.SortOrder).ToList();
             return items;
         }
+
+        #endregion
+
+        #region InviteSummary
+        public IQueryable<InviteSummary> GetInviteSummaries(int eventPlanID)
+        {
+            var items = _ent.InviteSummaries.Where(p => p.EventPlanID == eventPlanID);
+            return items;
+        }
+
+
+        #endregion
+
+        #region EventPlanItems
+        public IQueryable<EventPlanItem> GetEventPlanItems(int eventPlanID)
+        {
+            var items = _ent.EventPlanItems.Where(p => p.EventPlanID == eventPlanID);
+            return items;
+        }
+
+        #endregion
+
+
+
     }
 }

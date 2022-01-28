@@ -41,7 +41,7 @@ namespace app.razor.WebApp.Pages.EventPlan
                 return Page();
             }
                        
-            _eventPlanService.Insert(EventPlan);
+            _eventPlanService.InsertEventPlan(EventPlan);
 
             return RedirectToPage("./Index");
         }

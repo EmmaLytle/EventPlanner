@@ -179,6 +179,9 @@ warning 6002: The table/view 'EventPlanner.dbo.InviteSummary' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="EventPlan_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventPlanID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="EventPlan" EntityType="Self.EventPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventPlanItem" EntityType="Self.EventPlanItem" Schema="dbo" store:Type="Tables" />
@@ -235,7 +238,7 @@ warning 6002: The table/view 'EventPlanner.dbo.InviteSummary' does not have a pr
             <End Role="RelationshipType" EntitySet="RelationshipType" />
             <End Role="Invite" EntitySet="Invite" />
           </AssociationSet>
-          </EntityContainer>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -278,6 +281,9 @@ warning 6002: The table/view 'EventPlanner.dbo.InviteSummary' does not have a pr
             <End Role="RelationshipType" EntitySet="RelationshipTypes" />
             <End Role="Invite" EntitySet="Invites" />
           </AssociationSet>
+          <FunctionImport Name="EventPlan_Delete">
+            <Parameter Name="EventPlanID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="EventPlanSummary">
           <Key>
@@ -567,6 +573,7 @@ warning 6002: The table/view 'EventPlanner.dbo.InviteSummary' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="EventPlan_Delete" FunctionName="Model.Store.EventPlan_Delete" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

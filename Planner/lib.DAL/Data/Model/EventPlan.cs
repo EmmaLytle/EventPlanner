@@ -23,8 +23,6 @@ namespace lib.DAL.Data.Model
     
         public int ID { get; set; }
         public int EventTypeID { get; set; }
-
-
         public string Title { get; set; }
         public string Description { get; set; }
         public System.DateTime ModifiedDate { get; set; }

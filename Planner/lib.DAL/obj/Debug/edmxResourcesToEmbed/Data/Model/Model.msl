@@ -119,5 +119,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="EventPlan_Delete" FunctionName="Model.Store.EventPlan_Delete" />
   </EntityContainerMapping>
 </Mapping>

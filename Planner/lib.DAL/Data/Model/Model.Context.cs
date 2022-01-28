@@ -12,6 +12,8 @@ namespace lib.DAL.Data.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Entities : DbContext
     {
@@ -32,5 +34,14 @@ namespace lib.DAL.Data.Model
         public virtual DbSet<Invite> Invites { get; set; }
         public virtual DbSet<RelationshipType> RelationshipTypes { get; set; }
         public virtual DbSet<InviteSummary> InviteSummaries { get; set; }
+    
+        public virtual int EventPlan_Delete(Nullable<int> eventPlanID)
+        {
+            var eventPlanIDParameter = eventPlanID.HasValue ?
+                new ObjectParameter("EventPlanID", eventPlanID) :
+                new ObjectParameter("EventPlanID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EventPlan_Delete", eventPlanIDParameter);
+        }
     }
 }

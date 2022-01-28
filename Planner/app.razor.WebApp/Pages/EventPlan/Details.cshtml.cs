@@ -7,19 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using app.razor.WebApp.Data;
 using DAL = lib.DAL.Data.Model;
+using lib.DAL.Data.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using lib.DAL.Data.Model;
 
 namespace app.razor.WebApp.Pages.EventPlan
 {
     public class DetailsModel : PageModel
     {
-        private readonly app.razor.WebApp.Data.apprazorWebAppContext _context;
+        private readonly EventPlanService _eventPlanService;
 
-        public DetailsModel(app.razor.WebApp.Data.apprazorWebAppContext context)
+        public DetailsModel()
         {
-            _context = context;
+            _eventPlanService = new EventPlanService();
         }
 
-        public DAL.EventPlan EventPlan { get; set; }
+        public DAL.EventPlan CurrentEventPlan { get; set; }
+        public List<InviteSummary> InviteSummaryList { get; set; }
+        public List<EventPlanItem> EventPlanItemList { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,13 +33,16 @@ namespace app.razor.WebApp.Pages.EventPlan
                 return NotFound();
             }
 
-            EventPlan = await _context.EventPlan
-                .Include(e => e.EventType).FirstOrDefaultAsync(m => m.ID == id);
+            CurrentEventPlan = _eventPlanService.GetEventPlan(id.Value);
+            InviteSummaryList = _eventPlanService.GetInviteSummaries(id.Value).ToList();
+            EventPlanItemList = _eventPlanService.GetEventPlanItems(id.Value).ToList();
 
-            if (EventPlan == null)
+            if(CurrentEventPlan == null)
             {
                 return NotFound();
             }
+
+           
             return Page();
         }
     }
