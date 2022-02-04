@@ -27,9 +27,9 @@
 
 <hr />
 <h2 class="mt-4">Event Item</h2>
-@*<p>
-        <a class="btn btn-primary btn-sm" asp-page="Create">+ New Event</a>
-    </p>*@
+<p>
+        <a class="btn btn-primary btn-sm" asp-page="Create">+ New Event Item</a>
+</p>
 <table class="table table-hover">
     <thead>
         <tr>
@@ -76,9 +76,9 @@
 
 <hr />
 <h2 class="mt-4">Invite </h2>
-@*<p>
-    <a class="btn btn-primary btn-sm" asp-page="Create">+ New Event</a>
-</p>*@
+<p>
+    <a class="btn btn-primary btn-sm" asp-page="/Invite/Create" asp-route-id="@Model.CurrentEventPlan.ID">+ New Invite</a>
+</p>
 <table class="table table-hover">
     <thead>
         <tr>

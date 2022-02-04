@@ -1,0 +1,50 @@
+﻿@page
+@model app.razor.WebApp.Pages.Invite.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 >Create</h1>
+
+<h4>Invite</h4>
+<hr />
+<div class="row text-center">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" asp-for="Invite.EventPlanID"/>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Invite.Household" class="control-label">Household name</label>
+                <input asp-for="Invite.Household" class="form-control" asp-items="ViewBag.Household" />
+                <span asp-validation-for="Invite.Household" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invite.HeadCountEstimate" class="control-label">Guest Estimated</label>
+                <input asp-for="Invite.HeadCountEstimate" class="form-control" />
+                <span asp-validation-for="Invite.HeadCountEstimate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invite.HeadCountRSVP" class="control-label">Total RSVP</label>
+                <input asp-for="Invite.HeadCountRSVP" class="form-control" />
+                <span asp-validation-for="Invite.HeadCountRSVP" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Invite.RelationshipTypeID" class="control-label">Relationship</label>
+                <select asp-for="Invite.RelationshipTypeID" class="form-control" asp-items="ViewBag.RelationshipTypeID"></select>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a class="btn btn-primary" asp-page="Index" role="button"> Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -96,13 +96,33 @@ namespace lib.DAL.Data.Services
 
         #endregion
 
-        #region InviteSummary
+        #region Invite
         public IQueryable<InviteSummary> GetInviteSummaries(int eventPlanID)
         {
             var items = _ent.InviteSummaries.Where(p => p.EventPlanID == eventPlanID);
             return items;
         }
 
+        public int InsertInvite(Invite invite)
+        {
+            //If I recall we need to have an event item... or is it ok to just have an event plan..
+            Invite inv = new Invite();
+            inv.EventPlanID = invite.EventPlanID; //Get the current event plan we are on
+            inv.Household = invite.Household; //GetName
+            inv.HeadCountEstimate = invite.HeadCountEstimate;
+            inv.HeadCountRSVP = invite.HeadCountRSVP;
+            inv.RelationshipTypeID = invite.RelationshipTypeID;
+         
+            invite.ModifiedDate = DateTime.UtcNow;
+            invite.CreatedDate = DateTime.UtcNow;
+            _ent.Invites.Add(invite);
+
+            _ent.SaveChanges();
+
+            return invite.ID;
+
+
+        }
 
         #endregion
 
@@ -110,6 +130,16 @@ namespace lib.DAL.Data.Services
         public IQueryable<EventPlanItem> GetEventPlanItems(int eventPlanID)
         {
             var items = _ent.EventPlanItems.Where(p => p.EventPlanID == eventPlanID);
+            return items;
+        }
+
+        #endregion
+
+        #region MyRelationshipItems
+      
+        public List<RelationshipType> GetRelationshipType()
+        {
+            var items = _ent.RelationshipTypes.Where(p => p.IsEnabled == true).OrderBy(p => p.SortOrder).ToList();
             return items;
         }
 
