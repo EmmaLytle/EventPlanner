@@ -10,19 +10,19 @@
         "projectUniqueName": "C:\\LocalRepo\\EventPlanner\\Planner\\app.mvc.WebApp\\app.mvc.WebApp.csproj",
         "projectName": "app.mvc.WebApp",
         "projectPath": "C:\\LocalRepo\\EventPlanner\\Planner\\app.mvc.WebApp\\app.mvc.WebApp.csproj",
-        "packagesPath": "C:\\Users\\Janson Lytle\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\BestDayHR Zach\\.nuget\\packages\\",
         "outputPath": "C:\\LocalRepo\\EventPlanner\\Planner\\app.mvc.WebApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Janson Lytle\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\BestDayHR Zach\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
-          "C:\\LocalRepo\\municipalhr_nuget\\nuget": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "c:\\LocalRepo\\municipalhr_nuget\\nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -72,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     },
