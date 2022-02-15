@@ -49,7 +49,6 @@ namespace lib.DAL.Data.Services
 
         public int InsertEventPlan(EventPlan eventPlan)
         {
-
             EventPlan ep = new EventPlan();
             ep.Title = eventPlan.Title;
             ep.Description = eventPlan.Description;
@@ -133,10 +132,29 @@ namespace lib.DAL.Data.Services
             return items;
         }
 
+        public int InsertEventPlanItem(EventPlanItem eventPlanItem)
+        {
+            EventPlanItem epi = new EventPlanItem();
+            epi.Name = eventPlanItem.Name;
+            epi.Description = eventPlanItem.Description;
+            epi.AddressLine1 = eventPlanItem.AddressLine1;
+            epi.StartDateTime = eventPlanItem.StartDateTime;
+            epi.EndDateTime = eventPlanItem.EndDateTime;
+
+            eventPlanItem.ModifiedDate = DateTime.UtcNow;
+            eventPlanItem.CreatedDate = DateTime.UtcNow;
+            _ent.EventPlanItems.Add(eventPlanItem);
+
+            _ent.SaveChanges();
+
+            return eventPlanItem.ID;
+        }
+
+
         #endregion
 
         #region MyRelationshipItems
-      
+
         public List<RelationshipType> GetRelationshipType()
         {
             var items = _ent.RelationshipTypes.Where(p => p.IsEnabled == true).OrderBy(p => p.SortOrder).ToList();

@@ -1,0 +1,56 @@
+﻿@page
+@model app.razor.WebApp.Pages.EventItem.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 >Create</h1>
+
+<h4>Event Item</h4>
+<hr />
+<div class="row text-center">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" asp-for="CurrentEventPlanid" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EventPlanItem.Name" class="control-label">Event Item Name</label>
+                <input asp-for="EventPlanItem.Name" class="form-control" asp-items="ViewBag.Household" />
+                <span asp-validation-for="EventPlanItem.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventPlanItem.Description" class="control-label">Description</label>
+                <input asp-for="EventPlanItem.Description" class="form-control" />
+                <span asp-validation-for="EventPlanItem.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventPlanItem.AddressLine1" class="control-label">Location</label>
+                <input asp-for="EventPlanItem.AddressLine1" class="form-control" />
+                <span asp-validation-for="EventPlanItem.AddressLine1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-control">Start time</label>
+                <input asp-for="StartEventDate" class="form-control" type="date"/>
+                <input asp-for="StartEventTime" class="form-control" type="time"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control">End Time</label>
+                <input asp-for="EndEventDate" class="form-control" type="date" />
+                <input asp-for="EndEventTime" class="form-control" type="time" />
+
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a class="btn btn-primary" asp-page="Index" role="button"> Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
