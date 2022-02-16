@@ -23,6 +23,7 @@ namespace app.razor.WebApp.Pages.EventPlan
         }
 
         public DAL.EventPlan CurrentEventPlan { get; set; }
+        public DAL.Invite CurrentInvite { get; set; }
         public List<InviteSummary> InviteSummaryList { get; set; }
         public List<EventPlanItem> EventPlanItemList { get; set; }
 

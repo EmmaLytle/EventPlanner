@@ -441,3 +441,4 @@ C:\LocalRepo\EventPlanner\Planner\app.razor.WebApp\obj\Debug\netcoreapp3.1\Razor
 C:\LocalRepo\EventPlanner\Planner\app.razor.WebApp\obj\Debug\netcoreapp3.1\Razor\Pages\Invite\Create.cshtml.g.cs
 C:\LocalRepo\EventPlanner\Planner\app.razor.WebApp\obj\Debug\netcoreapp3.1\Razor\Pages\EventItem\Index.cshtml.g.cs
 C:\LocalRepo\EventPlanner\Planner\app.razor.WebApp\obj\Debug\netcoreapp3.1\Razor\Pages\EventItem\Create.cshtml.g.cs
+C:\LocalRepo\EventPlanner\Planner\app.razor.WebApp\obj\Debug\netcoreapp3.1\Razor\Pages\Invite\Edit.cshtml.g.cs

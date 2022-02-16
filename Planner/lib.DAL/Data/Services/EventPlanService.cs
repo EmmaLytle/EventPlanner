@@ -23,7 +23,6 @@ namespace lib.DAL.Data.Services
         {
             //_ent is hooked up to DB 
             var item = _ent.EventPlans.FirstOrDefault(p => p.ID == id);
-           
 
             return item;
         }
@@ -96,6 +95,14 @@ namespace lib.DAL.Data.Services
         #endregion
 
         #region Invite
+
+        public Invite GetInvite(int id)
+        {
+            //_ent is hooked up to DB 
+            var item = _ent.Invites.FirstOrDefault(p => p.ID == id);
+
+            return item;
+        }
         public IQueryable<InviteSummary> GetInviteSummaries(int eventPlanID)
         {
             var items = _ent.InviteSummaries.Where(p => p.EventPlanID == eventPlanID);
@@ -122,6 +129,24 @@ namespace lib.DAL.Data.Services
 
 
         }
+        public void UpdateInvite(Invite invite )
+        {
+            var item = _ent.Invites.FirstOrDefault(p => p.ID == invite.ID);
+            item.EventPlanID = invite.EventPlanID;
+            item.Household = invite.Household;
+            item.HeadCountEstimate = invite.HeadCountEstimate;
+            item.HeadCountRSVP = invite.HeadCountRSVP;
+            item.RelationshipTypeID = invite.RelationshipTypeID;
+            
+            item.ModifiedDate = DateTime.UtcNow;
+
+            _ent.SaveChanges();
+
+
+        }
+
+
+
 
         #endregion
 
