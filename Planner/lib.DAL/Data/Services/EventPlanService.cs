@@ -142,15 +142,20 @@ namespace lib.DAL.Data.Services
 
             _ent.SaveChanges();
 
-
         }
-
-
-
 
         #endregion
 
         #region EventPlanItems
+
+        public EventPlanItem GetEventItem(int id)
+        {
+            var item = _ent.EventPlanItems.FirstOrDefault(p => p.ID == id);
+
+            return item;
+
+        }
+
         public IQueryable<EventPlanItem> GetEventPlanItems(int eventPlanID)
         {
             var items = _ent.EventPlanItems.Where(p => p.EventPlanID == eventPlanID);
@@ -173,6 +178,24 @@ namespace lib.DAL.Data.Services
             _ent.SaveChanges();
 
             return eventPlanItem.ID;
+        }
+
+        public void UpdateEventItem(EventPlanItem eventPlanItem)
+        {
+
+            var item = _ent.EventPlanItems.FirstOrDefault(p => p.ID == eventPlanItem.ID);
+            item.EventPlanID = eventPlanItem.EventPlanID;
+            item.Name = eventPlanItem.Name;
+            item.Description = eventPlanItem.Description;
+            item.AddressLine1 = eventPlanItem.AddressLine1;
+            item.StartDateTime = eventPlanItem.StartDateTime;
+            item.EndDateTime = eventPlanItem.EndDateTime;
+
+            item.ModifiedDate = DateTime.UtcNow;
+
+            _ent.SaveChanges();
+
+
         }
 
 

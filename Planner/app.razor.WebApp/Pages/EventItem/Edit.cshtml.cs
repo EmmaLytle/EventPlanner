@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using app.razor.WebApp.Data;
 using DAL = lib.DAL.Data.Model;
 using lib.DAL.Data.Model;
@@ -12,19 +13,19 @@ using lib.DAL.Data.Services;
 
 namespace app.razor.WebApp.Pages.EventItem
 {
-    public class CreateModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly EventPlanService _eventPlanService;
 
-
-        public CreateModel()
+        public EditModel()
         {
             _eventPlanService = new EventPlanService();
         }
+
         [BindProperty]
         public int EventPlanID { get; set; }
         [BindProperty]
-        public DAL.EventPlanItem CurrentEventItem { get; set; }
+        public DAL.EventPlanItem  CurrentEventItem { get; set; }
         [BindProperty]
         public TimeSpan StartEventTime { get; set; }
         [BindProperty]
@@ -33,37 +34,28 @@ namespace app.razor.WebApp.Pages.EventItem
         public TimeSpan EndEventTime { get; set; }
         [BindProperty]
         public DateTime EndEventDate { get; set; }
-
-        public IActionResult OnGet(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            
             if (id == null)
             {
                 return NotFound();
             }
 
-            //Get the id so the new event plan item will know what event plan its attached to 
-            EventPlanID = id.Value;
-            CurrentEventItem = new DAL.EventPlanItem();
-            CurrentEventItem.EventPlanID = id.Value;
+            CurrentEventItem = _eventPlanService.GetEventItem(id.Value);
             StartEventDate = DateTime.Now.AddMonths(2); //Default for date picker
             EndEventDate = DateTime.Now.AddMonths(2); //Default for date picker
 
-            if (EventPlanID == null)
+            if (CurrentEventItem == null)
             {
                 return NotFound();
             }
+                       
 
-            
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-           
-           
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -72,13 +64,11 @@ namespace app.razor.WebApp.Pages.EventItem
             CurrentEventItem.StartDateTime = StartTime;
             DateTime EndTime = new DateTime(EndEventDate.Year, EndEventDate.Month, EndEventDate.Day, EndEventTime.Hours, EndEventTime.Minutes, EndEventTime.Seconds);
             CurrentEventItem.EndDateTime = EndTime;
-            CurrentEventItem.EventPlanID = EventPlanID;
+            _eventPlanService.UpdateEventItem(CurrentEventItem);
 
-            _eventPlanService.InsertEventPlanItem(CurrentEventItem);
+            return RedirectToPage("/EventPlan/Details", new { id = CurrentEventItem.EventPlanID });
 
-
-            //  new{ id = EventPlanItem.EventPlanID} Is an annoyms object 
-            return RedirectToPage("/EventPlan/Details", new{ id = CurrentEventItem.EventPlanID});
         }
+
     }
 }

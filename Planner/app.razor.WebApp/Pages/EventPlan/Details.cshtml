@@ -62,9 +62,9 @@
 
 
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                    <a asp-page="/EventItem/Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="/EventItem/Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="/EventItem/Delete" asp-route-id="@item.ID">Delete</a>
                 </td>
             </tr>
         }
@@ -118,8 +118,8 @@
 
                 <td>
                     <a asp-page="/Invite/Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                    <a asp-page="/Invite/Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="/Invite/Delete" asp-route-id="@item.ID">Delete</a>
                 </td>
             </tr>
         }
